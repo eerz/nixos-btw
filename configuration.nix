@@ -8,6 +8,7 @@
   imports =
     [
       ./hardware-configuration.nix
+      ./vmware-guest.nix
     ];
 
   # Use the GRUB 2 boot loader.
@@ -52,13 +53,13 @@
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
-  # Enable sound.
-  # services.pulseaudio.enable = true;
-  # OR
-  # services.pipewire = {
-  #   enable = true;
-  #   pulse.enable = true;
-  # };
+  # Enable sound with PipeWire.
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
@@ -94,6 +95,9 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+
+  # Network time synchronization
+  services.timesyncd.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
